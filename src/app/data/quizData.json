@@ -1,0 +1,17 @@
+[
+    {
+      "question": "Which of these words is misspelled?",
+      "options": ["Height", "Catagory", "Desperate", "Argument"],
+      "correct": 1
+    },
+    {
+      "question": "What is the capital of France?",
+      "options": ["Berlin", "Madrid", "Paris", "Rome"],
+      "correct": 2
+    },
+    {
+      "question": "Which planet is known as the Red Planet?",
+      "options": ["Earth", "Mars", "Jupiter", "Saturn"],
+      "correct": 1
+    }
+  ]
