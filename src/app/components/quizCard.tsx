@@ -36,9 +36,9 @@ export default function QuizCard({ onShowResult }: QuizCardProps) {
   const handleNextQuestion = () => {
     if (currentQuestion < quizData.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
-      setTimeLeft(10); // Reset timer for the next question
-      setAnswered(false); // Reset answered state for the next question
-      setSelectedOption(null); // Reset selected option
+      setTimeLeft(10); 
+      setAnswered(false); 
+      setSelectedOption(null); 
     }
   };
 
@@ -48,14 +48,11 @@ export default function QuizCard({ onShowResult }: QuizCardProps) {
 
   return (
     <div className="relative w-full max-w-3xl bg-blue-50 rounded-lg shadow-2xl sm:w-4/5 mx-4 sm:mx-0">
-      {/* Question and Timer/Score Row */}
       <div className="flex flex-col sm:flex-row justify-between items-center mb-4 bg-white p-4 rounded-t-lg">
-        {/* Question */}
         <h2 className="text-lg sm:text-2xl font-semibold text-center sm:text-left">
           General Knowledge Quiz
         </h2>
 
-        {/* Timer and Score */}
         <div className="flex space-x-4 text-gray-700 mt-2 sm:mt-0">
           <div className="relative flex items-center">
             {timeLeft === 0 && (
@@ -103,14 +100,12 @@ export default function QuizCard({ onShowResult }: QuizCardProps) {
         </div>
       </div>
 
-      {/* Question */}
       <div className="my-8 flex justify-center">
         <h2 className="text-base sm:text-xl font-semibold text-center">
           {quizData[currentQuestion].question}
         </h2>
       </div>
 
-      {/* Options */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4 px-6">
         {quizData[currentQuestion].options.map((option, index) => {
           let optionClass =
@@ -136,7 +131,7 @@ export default function QuizCard({ onShowResult }: QuizCardProps) {
               key={index}
               onClick={() => handleAnswer(index)}
               className={optionClass}
-              disabled={answered} // Disable buttons after answering
+              disabled={answered} 
             >
               {option}
             </button>
@@ -144,7 +139,6 @@ export default function QuizCard({ onShowResult }: QuizCardProps) {
         })}
       </div>
 
-      {/* Next Question Button */}
       {answered && (
         <div className="flex justify-center">
           {currentQuestion < quizData.length - 1 ? (
@@ -165,7 +159,6 @@ export default function QuizCard({ onShowResult }: QuizCardProps) {
         </div>
       )}
 
-      {/* Correct Answer */}
       {answered && (
         <div className="bg-blue-50 border-t-2 border-blue-200 rounded-b-lg p-4 flex justify-center mt-7 ">
           <svg

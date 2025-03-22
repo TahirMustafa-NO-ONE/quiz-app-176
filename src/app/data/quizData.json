@@ -1,17 +1,28 @@
 [
     {
-      "question": "Which of these words is misspelled?",
-      "options": ["Height", "Catagory", "Desperate", "Argument"],
+      "question": "Which animal is known as the 'King of the Jungle'?",
+      "options": ["Tiger", "Lion", "Elephant", "Cheetah"],
       "correct": 1
     },
     {
-      "question": "What is the capital of France?",
-      "options": ["Berlin", "Madrid", "Paris", "Rome"],
+      "question": "Which element has the chemical symbol 'O'?",
+      "options": ["Gold", "Oxygen", "Osmium", "Hydrogen"],
+      "correct": 1
+    },
+    {
+      "question": "What is the largest ocean on Earth?",
+      "options": ["Atlantic Ocean", "Indian Ocean", "Pacific Ocean", "Arctic Ocean"],
       "correct": 2
     },
     {
-      "question": "Which planet is known as the Red Planet?",
-      "options": ["Earth", "Mars", "Jupiter", "Saturn"],
-      "correct": 1
+      "question": "Which programming language is primarily used for web development?",
+      "options": ["Python", "C++", "JavaScript", "Java"],
+      "correct": 2
+    },
+    {
+      "question": "What is the smallest prime number?",
+      "options": ["0", "1", "2", "3"],
+      "correct": 2
     }
   ]
+  

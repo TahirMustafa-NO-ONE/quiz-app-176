@@ -20,7 +20,7 @@ export default function Start({
       backgroundImage: `url("https://images.stockcake.com/public/3/c/9/3c950319-8462-4930-81a8-254eb2e07e5b_large/collective-brainstorm-session-stockcake.jpg")`,
       backgroundSize: "cover",
       backgroundPosition: "center",
-      backgroundColor: "grey", // Fallback background color
+      backgroundColor: "grey",
       }}
     >
       <div
