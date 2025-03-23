@@ -38,7 +38,7 @@ export default function Home() {
       ) : showResult ? (
         <Result
           score={finalScore}
-          totalQuestions={3}
+          totalQuestions={quizdata.length}
           onRestartQuiz={handleRestartQuiz}
         />
       ) : (
