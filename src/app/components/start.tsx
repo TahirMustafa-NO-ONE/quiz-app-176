@@ -28,6 +28,9 @@ export default function Start({
       ></div>
 
       <div className="relative z-10 flex flex-col items-center justify-center h-60 w-11/12 sm:w-96 bg-white bg-opacity-90 rounded-lg p-6 mx-auto ring-3 ring-black shadow-lg">
+      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <span className="px-6 py-1 ring-2 ring-black rounded-lg bg-white">litreture</span>
+      </div>
       <h2 className="font-bold text-center text-2xl sm:text-3xl mb-4">{quizName}</h2>
       <button
         onClick={onStartQuiz}

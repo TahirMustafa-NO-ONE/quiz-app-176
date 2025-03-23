@@ -10,26 +10,26 @@ interface QuizCardProps {
 export default function QuizCard({ onShowResult }: QuizCardProps) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(10); // Timer starts at 10 seconds
-  const [answered, setAnswered] = useState(false); // Tracks if the user has answered the question
-  const [selectedOption, setSelectedOption] = useState<number | null>(null); // Tracks the selected option
+  const [timeLeft, setTimeLeft] = useState(10); 
+  const [answered, setAnswered] = useState(false); 
+  const [selectedOption, setSelectedOption] = useState<number | null>(null); 
 
   useEffect(() => {
     if (timeLeft > 0 && !answered) {
       const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
       return () => clearTimeout(timer);
     } else if (timeLeft === 0 && !answered) {
-      setAnswered(true); // Mark the question as answered
+      setAnswered(true); 
     }
   }, [timeLeft, answered]);
 
   const handleAnswer = (index: number) => {
     if (!answered) {
-      setSelectedOption(index); // Set the selected option
+      setSelectedOption(index); 
       if (index === quizData[currentQuestion].correct) {
         setScore(score + 10);
       }
-      setAnswered(true); // Mark the question as answered
+      setAnswered(true); 
     }
   };
 
@@ -106,35 +106,62 @@ export default function QuizCard({ onShowResult }: QuizCardProps) {
         </h2>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4 px-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-4 px-6">
         {quizData[currentQuestion].options.map((option, index) => {
           let optionClass =
-            "py-2 px-4 rounded-lg shadow bg-white ring-2 ring-blue-300 hover:bg-blue-100 hover:ring-2 hover:ring-blue-500";
+        "py-2 px-4 rounded-lg shadow bg-white ring-2 ring-blue-300 hover:bg-blue-100 hover:ring-2 hover:ring-blue-500 relative";
           if (answered) {
-            if (index === quizData[currentQuestion].correct) {
-              optionClass =
-                "py-2 px-4 rounded-lg shadow bg-green-100 ring-2 ring-green-500";
-            } else if (
-              index === selectedOption &&
-              index !== quizData[currentQuestion].correct
-            ) {
-              optionClass =
-                "py-2 px-4 rounded-lg shadow bg-red-100 ring-2 ring-red-500";
-            } else {
-              optionClass =
-                "py-2 px-4 rounded-lg shadow bg-gray-100 text-gray-400 ring-2 ring-gray-300 cursor-not-allowed";
-            }
+        if (index === quizData[currentQuestion].correct) {
+          optionClass =
+            "py-2 px-4 rounded-lg shadow bg-green-100 ring-2 ring-green-500 relative";
+        } else if (
+          index === selectedOption &&
+          index !== quizData[currentQuestion].correct
+        ) {
+          optionClass =
+            "py-2 px-4 rounded-lg shadow bg-red-100 ring-2 ring-red-500 relative";
+        } else {
+          optionClass =
+            "py-2 px-4 rounded-lg shadow bg-gray-100 text-gray-400 ring-2 ring-gray-300 cursor-not-allowed relative";
+        }
           }
 
           return (
-            <button
-              key={index}
-              onClick={() => handleAnswer(index)}
-              className={optionClass}
-              disabled={answered} 
+        <button
+          key={index}
+          onClick={() => handleAnswer(index)}
+          className={optionClass}
+          disabled={answered}
+        >
+          {option}
+          {answered && (
+            <span className="absolute top-0 right-0 transform translate-x-1 -translate-y-1/2">
+            {index === quizData[currentQuestion].correct ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="white"
+              className="bg-green-500 rounded-full"
+              viewBox="0 0 24 24"
             >
-              {option}
-            </button>
+              <path d="M20.285 6.707l-11.285 11.285-5.285-5.285 1.414-1.414 3.871 3.871 9.871-9.871z" />
+            </svg>
+          ) : index === selectedOption ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="white"
+              className="bg-red-500 rounded-full"
+              viewBox="0 0 24 24"
+            >
+              <path d="M18.364 5.636l-1.414-1.414-5.95 5.95-5.95-5.95-1.414 1.414 5.95 5.95-5.95 5.95 1.414 1.414 5.95-5.95 5.95 5.95 1.414-1.414-5.95-5.95z" />
+            </svg>
+          ) : null}
+            </span>
+          )}
+        </button>
           );
         })}
       </div>
@@ -167,7 +194,7 @@ export default function QuizCard({ onShowResult }: QuizCardProps) {
             height="22"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="currentColor"
+            stroke="grey"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"

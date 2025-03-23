@@ -66,7 +66,7 @@ export default function Result({ score, totalQuestions, onRestartQuiz }: ResultP
       <div className="flex justify-center my-4">
         <button
           onClick={onRestartQuiz}
-          className="flex items-center gap-2 px-6 py-3 bg-blue-800 text-white rounded-lg shadow-md ring-2 ring-black hover:bg-blue-600"
+          className="flex items-center gap-2 px-6 py-3 bg-white text-blue-800 rounded-lg shadow-md ring-2 ring-blue-800 hover:bg-blue-800 hover:text-white"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
