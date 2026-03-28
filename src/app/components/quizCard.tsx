@@ -69,7 +69,7 @@ export default function QuizCard({
   }
 
   return (
-    <div className="relative w-full max-w-3xl bg-blue-50 rounded-lg shadow-2xl sm:w-4/5 mx-4 sm:mx-0">
+    <div className="relative w-full max-w-3xl bg-blue-50 rounded-lg shadow-2xl sm:w-4/5 mx-auto pb-6">
       <div className="flex flex-col sm:flex-row justify-between items-center mb-4 bg-white p-4 rounded-t-lg">
         <h2 className="text-lg sm:text-2xl font-semibold text-center sm:text-left">
           {quizName}
