@@ -1,50 +1,70 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import quizData from "../data/quizData.json";
+import React, { useEffect, useState } from "react";
+import type { QuizQuestion } from "../types/quiz";
 
 interface QuizCardProps {
   onShowResult: (score: number) => void;
+  questions: QuizQuestion[];
 }
 
-export default function QuizCard({ onShowResult }: QuizCardProps) {
+export default function QuizCard({
+  onShowResult,
+  questions,
+}: QuizCardProps) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(10); 
-  const [answered, setAnswered] = useState(false); 
-  const [selectedOption, setSelectedOption] = useState<number | null>(null); 
+  const [timeLeft, setTimeLeft] = useState(10);
+  const [answered, setAnswered] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<number | null>(null);
+
+  useEffect(() => {
+    setCurrentQuestion(0);
+    setScore(0);
+    setTimeLeft(10);
+    setAnswered(false);
+    setSelectedOption(null);
+  }, [questions]);
 
   useEffect(() => {
     if (timeLeft > 0 && !answered) {
       const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
       return () => clearTimeout(timer);
-    } else if (timeLeft === 0 && !answered) {
-      setAnswered(true); 
+    }
+
+    if (timeLeft === 0 && !answered) {
+      setAnswered(true);
     }
   }, [timeLeft, answered]);
 
   const handleAnswer = (index: number) => {
     if (!answered) {
-      setSelectedOption(index); 
-      if (index === quizData[currentQuestion].correct) {
-        setScore(score + 10);
+      setSelectedOption(index);
+
+      if (index === questions[currentQuestion].correct) {
+        setScore((currentScore) => currentScore + 10);
       }
-      setAnswered(true); 
+
+      setAnswered(true);
     }
   };
 
   const handleNextQuestion = () => {
-    if (currentQuestion < quizData.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
-      setTimeLeft(10); 
-      setAnswered(false); 
-      setSelectedOption(null); 
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion((questionIndex) => questionIndex + 1);
+      setTimeLeft(10);
+      setAnswered(false);
+      setSelectedOption(null);
     }
   };
 
   const handleSeeResult = () => {
     onShowResult(score);
   };
+
+  if (questions.length === 0) {
+    return null;
+  }
 
   return (
     <div className="relative w-full max-w-3xl bg-blue-50 rounded-lg shadow-2xl sm:w-4/5 mx-4 sm:mx-0">
@@ -92,7 +112,7 @@ export default function QuizCard({ onShowResult }: QuizCardProps) {
             </div>
           </div>
           <span className="px-2 py-1 text-sm sm:text-base">
-            {currentQuestion + 1} of {quizData.length}
+            {currentQuestion + 1} of {questions.length}
           </span>
           <span className="bg-green-100 text-gray-800 px-2 py-1 rounded-lg text-xs sm:text-sm">
             Score: {score}
@@ -102,78 +122,79 @@ export default function QuizCard({ onShowResult }: QuizCardProps) {
 
       <div className="my-8 flex justify-center">
         <h2 className="text-base sm:text-xl font-semibold text-center">
-          {quizData[currentQuestion].question}
+          {questions[currentQuestion].question}
         </h2>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-4 px-6">
-        {quizData[currentQuestion].options.map((option, index) => {
+        {questions[currentQuestion].options.map((option, index) => {
           let optionClass =
-        "py-2 px-4 rounded-lg shadow bg-white ring-2 ring-blue-300 hover:bg-blue-100 hover:ring-2 hover:ring-blue-500 relative";
+            "py-2 px-4 rounded-lg shadow bg-white ring-2 ring-blue-300 hover:bg-blue-100 hover:ring-2 hover:ring-blue-500 relative";
+
           if (answered) {
-        if (index === quizData[currentQuestion].correct) {
-          optionClass =
-            "py-2 px-4 rounded-lg shadow bg-green-100 ring-2 ring-green-500 relative";
-        } else if (
-          index === selectedOption &&
-          index !== quizData[currentQuestion].correct
-        ) {
-          optionClass =
-            "py-2 px-4 rounded-lg shadow bg-red-100 ring-2 ring-red-500 relative";
-        } else {
-          optionClass =
-            "py-2 px-4 rounded-lg shadow bg-gray-100 text-gray-400 ring-2 ring-gray-300 cursor-not-allowed relative";
-        }
+            if (index === questions[currentQuestion].correct) {
+              optionClass =
+                "py-2 px-4 rounded-lg shadow bg-green-100 ring-2 ring-green-500 relative";
+            } else if (
+              index === selectedOption &&
+              index !== questions[currentQuestion].correct
+            ) {
+              optionClass =
+                "py-2 px-4 rounded-lg shadow bg-red-100 ring-2 ring-red-500 relative";
+            } else {
+              optionClass =
+                "py-2 px-4 rounded-lg shadow bg-gray-100 text-gray-400 ring-2 ring-gray-300 cursor-not-allowed relative";
+            }
           }
 
           return (
-        <button
-          key={index}
-          onClick={() => handleAnswer(index)}
-          className={optionClass}
-          disabled={answered}
-        >
-          {option}
-          {answered && (
-            <span className="absolute top-0 right-0 transform translate-x-1 -translate-y-1/2">
-            {index === quizData[currentQuestion].correct ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              fill="white"
-              className="bg-green-500 rounded-full"
-              viewBox="0 0 24 24"
+            <button
+              key={`${option}-${index}`}
+              onClick={() => handleAnswer(index)}
+              className={optionClass}
+              disabled={answered}
             >
-              <path d="M20.285 6.707l-11.285 11.285-5.285-5.285 1.414-1.414 3.871 3.871 9.871-9.871z" />
-            </svg>
-          ) : index === selectedOption ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              fill="white"
-              className="bg-red-500 rounded-full"
-              viewBox="0 0 24 24"
-            >
-              <path d="M18.364 5.636l-1.414-1.414-5.95 5.95-5.95-5.95-1.414 1.414 5.95 5.95-5.95 5.95 1.414 1.414 5.95-5.95 5.95 5.95 1.414-1.414-5.95-5.95z" />
-            </svg>
-          ) : null}
-            </span>
-          )}
-        </button>
+              {option}
+              {answered && (
+                <span className="absolute top-0 right-0 transform translate-x-1 -translate-y-1/2">
+                  {index === questions[currentQuestion].correct ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      fill="white"
+                      className="bg-green-500 rounded-full"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M20.285 6.707l-11.285 11.285-5.285-5.285 1.414-1.414 3.871 3.871 9.871-9.871z" />
+                    </svg>
+                  ) : index === selectedOption ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      fill="white"
+                      className="bg-red-500 rounded-full"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M18.364 5.636l-1.414-1.414-5.95 5.95-5.95-5.95-1.414 1.414 5.95 5.95-5.95 5.95 1.414 1.414 5.95-5.95 5.95 5.95 1.414-1.414-5.95-5.95z" />
+                    </svg>
+                  ) : null}
+                </span>
+              )}
+            </button>
           );
         })}
       </div>
 
       {answered && (
         <div className="flex justify-center">
-          {currentQuestion < quizData.length - 1 ? (
+          {currentQuestion < questions.length - 1 ? (
             <button
               onClick={handleNextQuestion}
               className="mt-4 px-4 py-2 bg-blue-800 ring-2 ring-black text-white rounded hover:bg-blue-600"
             >
-              Next ➤
+              Next
             </button>
           ) : (
             <button
@@ -187,7 +208,7 @@ export default function QuizCard({ onShowResult }: QuizCardProps) {
       )}
 
       {answered && (
-        <div className="bg-blue-50 border-t-2 border-blue-200 rounded-b-lg p-4 flex justify-center mt-7 ">
+        <div className="bg-blue-50 border-t-2 border-blue-200 rounded-b-lg p-4 flex justify-center mt-7">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="22"
@@ -206,9 +227,7 @@ export default function QuizCard({ onShowResult }: QuizCardProps) {
           </svg>
           <div className="text-gray-500 text-sm sm:text-base">
             The Correct Answer is:{" "}
-            {quizData[currentQuestion].options[
-              quizData[currentQuestion].correct
-            ]}
+            {questions[currentQuestion].options[questions[currentQuestion].correct]}
           </div>
         </div>
       )}
