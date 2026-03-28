@@ -23,6 +23,7 @@
 # misc
 .DS_Store
 *.pem
+sonar-project.properties
 
 # debug
 npm-debug.log*
