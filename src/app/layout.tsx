@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Quiz App",
-  description: "General Knowledge Quiz App",
+  title: "MindCheck Quiz App",
+  description: "Test your knowledge with MindCheck - an interactive quiz app",
 };
 
 export default function RootLayout({
