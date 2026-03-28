@@ -6,11 +6,13 @@ import type { QuizQuestion } from "../types/quiz";
 interface QuizCardProps {
   onShowResult: (score: number) => void;
   questions: QuizQuestion[];
+  quizName: string;
 }
 
 export default function QuizCard({
   onShowResult,
   questions,
+  quizName,
 }: QuizCardProps) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
@@ -70,7 +72,7 @@ export default function QuizCard({
     <div className="relative w-full max-w-3xl bg-blue-50 rounded-lg shadow-2xl sm:w-4/5 mx-4 sm:mx-0">
       <div className="flex flex-col sm:flex-row justify-between items-center mb-4 bg-white p-4 rounded-t-lg">
         <h2 className="text-lg sm:text-2xl font-semibold text-center sm:text-left">
-          General Knowledge Quiz
+          {quizName}
         </h2>
 
         <div className="flex space-x-4 text-gray-700 mt-2 sm:mt-0">

@@ -3,3 +3,8 @@ export interface QuizQuestion {
   options: string[];
   correct: number;
 }
+
+export interface QuizCategory {
+  id: number;
+  name: string;
+}

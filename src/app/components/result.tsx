@@ -5,10 +5,16 @@ import React, { useEffect, useState } from "react";
 interface ResultProps {
   score: number;
   totalQuestions: number;
+  quizName: string;
   onRestartQuiz: () => void;
 }
 
-export default function Result({ score, totalQuestions, onRestartQuiz }: ResultProps) {
+export default function Result({
+  score,
+  totalQuestions,
+  quizName,
+  onRestartQuiz,
+}: ResultProps) {
   const [animatedPercentage, setAnimatedPercentage] = useState(0);
   const percentage = (score / (totalQuestions * 10)) * 100;
 
@@ -24,7 +30,7 @@ export default function Result({ score, totalQuestions, onRestartQuiz }: ResultP
       <div className="flex justify-center bg-white py-2 rounded-t-lg border-b-2 border-blue-500">
         <span className="text-2xl font-bold">Score</span>
       </div>
-      <h2 className="text-2xl font-semibold text-center my-4">General Knowledge Quiz</h2>
+      <h2 className="text-2xl font-semibold text-center my-4">{quizName}</h2>
       <div className="flex justify-center items-center flex-col">
         <div className="relative w-60 h-60">
           <svg className="w-full h-full" viewBox="0 0 48 48">

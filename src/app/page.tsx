@@ -1,28 +1,62 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Start from "./components/start";
 import QuizCard from "./components/quizCard";
 import Result from "./components/result";
-import { getFallbackQuestions } from "./lib/quiz";
-import type { QuizQuestion } from "./types/quiz";
+import { fallbackCategories, getFallbackQuestions } from "./lib/quiz";
+import type { QuizCategory, QuizQuestion } from "./types/quiz";
 
 const QUESTION_COUNT = 5;
+const DEFAULT_CATEGORY = fallbackCategories[0];
 
 export default function Home() {
   const [quizStarted, setQuizStarted] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [finalScore, setFinalScore] = useState(0);
   const [questions, setQuestions] = useState<QuizQuestion[]>(getFallbackQuestions());
+  const [categories, setCategories] = useState<QuizCategory[]>(fallbackCategories);
+  const [selectedCategory, setSelectedCategory] = useState<QuizCategory>(DEFAULT_CATEGORY);
   const [isLoading, setIsLoading] = useState(false);
   const [loadError, setLoadError] = useState("");
 
-  const fetchQuestions = async () => {
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch("/api/categories", { cache: "no-store" });
+
+        if (!response.ok) {
+          throw new Error("Failed to load categories");
+        }
+
+        const data = await response.json();
+        const nextCategories = data.categories as QuizCategory[];
+
+        if (nextCategories.length === 0) {
+          throw new Error("No categories available");
+        }
+
+        setCategories(nextCategories);
+        setSelectedCategory((currentCategory) =>
+          nextCategories.find((category) => category.id === currentCategory.id) ??
+          nextCategories[0]
+        );
+      } catch {
+        setCategories(fallbackCategories);
+      }
+    };
+
+    void fetchCategories();
+  }, []);
+
+  const fetchQuestions = async (categoryId: number) => {
     setIsLoading(true);
     setLoadError("");
 
     try {
-      const response = await fetch("/api/questions", { cache: "no-store" });
+      const response = await fetch(`/api/questions?category=${categoryId}`, {
+        cache: "no-store",
+      });
 
       if (!response.ok) {
         throw new Error("Failed to load questions");
@@ -39,7 +73,7 @@ export default function Home() {
   };
 
   const handleStartQuiz = async () => {
-    await fetchQuestions();
+    await fetchQuestions(selectedCategory.id);
     setQuizStarted(true);
     setShowResult(false);
   };
@@ -50,24 +84,39 @@ export default function Home() {
   };
 
   const handleRestartQuiz = async () => {
-    await fetchQuestions();
+    await fetchQuestions(selectedCategory.id);
     setQuizStarted(true);
     setShowResult(false);
     setFinalScore(0);
   };
 
+  const handleCategoryChange = (categoryId: number) => {
+    const nextCategory = categories.find((category) => category.id === categoryId);
+
+    if (nextCategory) {
+      setSelectedCategory(nextCategory);
+    }
+  };
+
+  const quizName = `${selectedCategory.name} Quiz`;
+
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       {!quizStarted ? (
         <Start
-          quizName="General Knowledge Quiz"
+          appTitle="MindCheck"
           questionCount={QUESTION_COUNT}
+          categories={categories}
+          selectedCategoryId={selectedCategory.id}
+          onCategoryChange={handleCategoryChange}
           onStartQuiz={handleStartQuiz}
+          isLoading={isLoading}
         />
       ) : showResult ? (
         <Result
           score={finalScore}
           totalQuestions={questions.length}
+          quizName={quizName}
           onRestartQuiz={handleRestartQuiz}
         />
       ) : (
@@ -78,7 +127,11 @@ export default function Home() {
           {isLoading ? (
             <div className="text-center text-gray-700">Loading fresh questions...</div>
           ) : (
-            <QuizCard onShowResult={handleShowResult} questions={questions} />
+            <QuizCard
+              onShowResult={handleShowResult}
+              questions={questions}
+              quizName={quizName}
+            />
           )}
         </div>
       )}
