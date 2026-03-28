@@ -16,14 +16,14 @@ export default function QuizCard({
 }: QuizCardProps) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(10);
+  const [timeLeft, setTimeLeft] = useState(30);
   const [answered, setAnswered] = useState(false);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
 
   useEffect(() => {
     setCurrentQuestion(0);
     setScore(0);
-    setTimeLeft(10);
+    setTimeLeft(30);
     setAnswered(false);
     setSelectedOption(null);
   }, [questions]);
@@ -54,7 +54,7 @@ export default function QuizCard({
   const handleNextQuestion = () => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion((questionIndex) => questionIndex + 1);
-      setTimeLeft(10);
+      setTimeLeft(30);
       setAnswered(false);
       setSelectedOption(null);
     }
@@ -100,7 +100,7 @@ export default function QuizCard({
                   strokeWidth="4"
                   fill="none"
                   strokeDasharray={2 * Math.PI * 14}
-                  strokeDashoffset={(2 * Math.PI * 14 * timeLeft) / 10}
+                  strokeDashoffset={(2 * Math.PI * 14 * timeLeft) / 30}
                   strokeLinecap="round"
                   transform="rotate(-90 16 16)"
                   style={{

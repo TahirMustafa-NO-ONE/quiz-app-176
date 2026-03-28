@@ -90,6 +90,12 @@ export default function Home() {
     setFinalScore(0);
   };
 
+  const handleGoToStart = () => {
+    setQuizStarted(false);
+    setShowResult(false);
+    setFinalScore(0);
+  };
+
   const handleCategoryChange = (categoryId: number) => {
     const nextCategory = categories.find((category) => category.id === categoryId);
 
@@ -118,6 +124,7 @@ export default function Home() {
           totalQuestions={questions.length}
           quizName={quizName}
           onRestartQuiz={handleRestartQuiz}
+          onGoToStart={handleGoToStart}
         />
       ) : (
         <div className="w-full">

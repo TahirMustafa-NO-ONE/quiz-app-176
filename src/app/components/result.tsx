@@ -7,6 +7,7 @@ interface ResultProps {
   totalQuestions: number;
   quizName: string;
   onRestartQuiz: () => void;
+  onGoToStart: () => void;
 }
 
 export default function Result({
@@ -14,6 +15,7 @@ export default function Result({
   totalQuestions,
   quizName,
   onRestartQuiz,
+  onGoToStart,
 }: ResultProps) {
   const [animatedPercentage, setAnimatedPercentage] = useState(0);
   const percentage = (score / (totalQuestions * 10)) * 100;
@@ -69,10 +71,10 @@ export default function Result({
           </div>
         </div>
       </div>
-      <div className="flex justify-center my-4">
+      <div className="flex flex-col sm:flex-row justify-center gap-4 my-4 px-4">
         <button
           onClick={onRestartQuiz}
-          className="flex items-center gap-2 px-6 py-3 bg-white text-blue-800 rounded-lg shadow-md ring-2 ring-blue-800 hover:bg-blue-800 hover:text-white"
+          className="flex items-center justify-center gap-2 px-6 py-3 bg-blue-800 text-white rounded-lg shadow-md ring-2 ring-blue-800 hover:bg-blue-600"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -90,6 +92,27 @@ export default function Result({
             <path d="M3 3v5h5" />
           </svg>
           Play Again
+        </button>
+        <button
+          onClick={onGoToStart}
+          className="flex items-center justify-center gap-2 px-6 py-3 bg-white text-blue-800 rounded-lg shadow-md ring-2 ring-blue-800 hover:bg-blue-800 hover:text-white"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="lucide lucide-home"
+          >
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            <polyline points="9 22 9 12 15 12 15 22" />
+          </svg>
+          Go to Start
         </button>
       </div>
     </div>
