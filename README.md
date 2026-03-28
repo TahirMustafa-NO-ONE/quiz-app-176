@@ -1,41 +1,105 @@
-# MindCheck
+<div align="center">
+
+# 🧠 MindCheck
+
+### Test Your Knowledge, Challenge Your Mind
 
 A modern, interactive quiz application built with Next.js that challenges your knowledge across multiple categories. MindCheck integrates with the Open Trivia Database API to provide fresh questions every time.
 
-## Features
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
 
-- **Multiple Quiz Categories**: Choose from 11 different categories including General Knowledge, Science, History, Geography, Sports, and more
-- **Dynamic Questions**: Fetches fresh questions from the Open Trivia Database API for each quiz session
-- **Smart Fallback System**: Includes offline support with local question sets if the API is unavailable
-- **Randomized Options**: Answer choices are shuffled for each question to prevent memorization patterns
-- **Score Tracking**: Get instant feedback on your performance at the end of each quiz
-- **Responsive Design**: Clean, mobile-friendly interface built with Tailwind CSS
-- **Modern UI/UX**: Smooth transitions and intuitive navigation between quiz states
+[Demo](#) • [Features](#-features) • [Installation](#-getting-started) • [Documentation](#-usage)
 
-## Tech Stack
+</div>
 
-- **Framework**: [Next.js 16](https://nextjs.org/) with App Router
-- **UI Library**: [React 19](https://react.dev/)
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
-- **Data Source**: [Open Trivia Database API](https://opentdb.com/)
+---
 
-## Getting Started
+## ✨ Features
+
+<table>
+<tr>
+<td>
+
+🎯 **Multiple Quiz Categories**
+Choose from 11 different categories including General Knowledge, Science, History, Geography, Sports, and more
+
+</td>
+<td>
+
+🔄 **Dynamic Questions**
+Fetches fresh questions from the Open Trivia Database API for each quiz session
+
+</td>
+</tr>
+<tr>
+<td>
+
+📡 **Smart Fallback System**
+Includes offline support with local question sets if the API is unavailable
+
+</td>
+<td>
+
+🔀 **Randomized Options**
+Answer choices are shuffled for each question to prevent memorization patterns
+
+</td>
+</tr>
+<tr>
+<td>
+
+📊 **Score Tracking**
+Get instant feedback on your performance at the end of each quiz
+
+</td>
+<td>
+
+📱 **Responsive Design**
+Clean, mobile-friendly interface built with Tailwind CSS
+
+</td>
+</tr>
+</table>
+
+## 🛠️ Tech Stack
+
+<div align="center">
+
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| [Next.js](https://nextjs.org/) | 16 | React Framework with App Router |
+| [React](https://react.dev/) | 19 | UI Library |
+| [TypeScript](https://www.typescriptlang.org/) | 5 | Type Safety |
+| [Tailwind CSS](https://tailwindcss.com/) | 4 | Styling |
+| [Open Trivia DB](https://opentdb.com/) | API | Question Data Source |
+
+</div>
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
-- Node.js 20.x or higher
-- npm, yarn, pnpm, or bun package manager
+Before you begin, ensure you have the following installed:
+
+```bash
+Node.js 20.x or higher
+npm / yarn / pnpm / bun
+```
 
 ### Installation
 
-1. Clone the repository:
+**1. Clone the repository**
+
 ```bash
 git clone <repository-url>
 cd mindcheck
 ```
 
-2. Install dependencies:
+**2. Install dependencies**
+
 ```bash
 npm install
 # or
@@ -46,7 +110,8 @@ pnpm install
 bun install
 ```
 
-3. Run the development server:
+**3. Run the development server**
+
 ```bash
 npm run dev
 # or
@@ -57,22 +122,44 @@ pnpm dev
 bun dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser to start using MindCheck.
+**4. Open your browser**
 
-## Usage
+Visit [http://localhost:3000](http://localhost:3000) to start using MindCheck 🎉
 
-1. **Select a Category**: Choose from 11 different quiz categories on the start screen
-2. **Start the Quiz**: Click the start button to begin your 5-question challenge
-3. **Answer Questions**: Select your answer for each multiple-choice question
-4. **View Results**: See your final score and performance summary
-5. **Retry or Change Category**: Restart with the same category or choose a different one
+---
 
-## Available Scripts
+## 📖 Usage
 
-- `npm run dev` - Start the development server with Turbopack
-- `npm run build` - Build the application for production
-- `npm run start` - Start the production server
-- `npm run lint` - Run ESLint to check code quality
+<div align="center">
+
+```mermaid
+graph LR
+    A[Choose Category] --> B[Start Quiz]
+    B --> C[Answer Questions]
+    C --> D[View Results]
+    D --> E{Continue?}
+    E -->|Yes| A
+    E -->|No| F[End]
+```
+
+</div>
+
+1. **🎯 Select a Category** - Choose from 11 different quiz categories on the start screen
+2. **▶️ Start the Quiz** - Click the start button to begin your 5-question challenge
+3. **✅ Answer Questions** - Select your answer for each multiple-choice question
+4. **📊 View Results** - See your final score and performance summary
+5. **🔄 Retry or Change Category** - Restart with the same category or choose a different one
+
+---
+
+## 📝 Available Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start the development server with Turbopack |
+| `npm run build` | Build the application for production |
+| `npm run start` | Start the production server |
+| `npm run lint` | Run ESLint to check code quality |
 
 ## Project Structure
 
